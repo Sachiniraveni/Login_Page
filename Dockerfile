@@ -3,7 +3,7 @@ From centos:latest
 
 RUN yum install openssh-server -y 
 
-RUN yum install openjedk-8-jre -y
+RUN yum install openjdk-8-jre -y
 
 
 RUN yum install httpd -y
