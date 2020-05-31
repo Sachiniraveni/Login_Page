@@ -1,9 +1,12 @@
 From centos:latest
 
 
-yum install openssh-server -y 
+RUN yum install openssh-server -y 
 
-yum install openjedk-8-jre -y
+RUN yum install openjedk-8-jre -y
+
+
+RUN yum install httpd -y
 
 RUN mkdir /var/run/sshd
 
@@ -16,6 +19,9 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
 
+COPY code.html /var/www/html/
+
+
 #now_kubetcl_setup
 
 Run yum install curl -y
@@ -24,8 +30,18 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s
 RUN chmod +x ./kubectl
 RUN mv ./kubectl /usr/local/bin/kubectl
 
+EXPOSE 80
+
+
+EXPOSE 22
+
 
 CMD ["/usr/sbin/sshd", "-D"]
+
+
+CMD ["/usr/sbin/httpd","-D","FOREGROUND"]
+
+
 
 
 
